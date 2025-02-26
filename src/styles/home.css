@@ -1,0 +1,12 @@
+:root {
+    background-color: rgb(var(--bg-color));
+    color: rgb(var(--text-color))
+}
+
+.homepage {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
