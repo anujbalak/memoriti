@@ -4,6 +4,8 @@ import Home from './web/home';
 import Board from './web/Board';
 import './styles/home.css'
 import "./styles/Button.css"
+import "./styles/Board.css"
+import "./styles/Card.css"
 
 function App() {
   const [play, setPlay] = useState(false);

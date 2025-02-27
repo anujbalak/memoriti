@@ -10,3 +10,19 @@
     align-items: center;
     flex-direction: column;
 }
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 3rem;
+    margin: 0;
+    margin-bottom: 0.8em;
+}
+
+.instruction-container {
+    max-width: 600px;
+}

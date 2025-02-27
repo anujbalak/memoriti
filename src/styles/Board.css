@@ -1,0 +1,24 @@
+.header-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.header-container .title {
+    margin: 0;
+}
+
+.score {
+    font-size: 1.4rem;
+}
+
+.cards {
+    margin: 3em;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5em;
+    row-gap: 2em;
+    justify-content: center;
+    align-items: center;
+}
