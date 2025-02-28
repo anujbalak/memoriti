@@ -1,10 +1,4 @@
-export function shuffle(arr) {
-    let result = Array.apply(null, {length: 10});
-    console.log(s(arr))   
-}
-
-
-function s(array) {
+export function shuffleCards(array) {
     let counter = array.length;
 
     while (counter > 0) {
@@ -15,5 +9,5 @@ function s(array) {
         array[index] = temp;
     }
 
-    return array;
+    return array;  
 }
