@@ -32,6 +32,8 @@
     transform: scale(1, 0.5);
     transform-origin: bottom;
     opacity: 0;
+    margin: 2px 2px;
+    border-radius: 0 0 8px 8px;
 }
 
 .card-name-container:hover, .card-name-container.clicked {

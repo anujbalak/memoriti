@@ -66,11 +66,13 @@ export default function Board() {
 
     return (
         <div className="boardpage">
-            <Header
-                currentScore={currentScore}
-                bestScore={bestScore}
-            />
-            <Instructions />
+            <div className="details">
+                <Header
+                    currentScore={currentScore}
+                    bestScore={bestScore}
+                />
+                <Instructions />
+            </div>
             <hr />
             {deck &&
                 <Cards
@@ -78,11 +80,13 @@ export default function Board() {
                     cardClickHandler={cardClickHandler}
                 />
             }
-            <EndScreen 
-                ref={ref}
-                currentScore={currentScore}
-                restartBtnHandler={restartBtnHandler}
-            />
+            {gameFinished &&
+                <EndScreen 
+                    ref={ref}
+                    currentScore={currentScore}
+                    restartBtnHandler={restartBtnHandler}
+                />
+            }
         </div>
     )
 }
@@ -126,7 +130,7 @@ function manageScore(
 
 function EndScreen({ref, currentScore, restartBtnHandler}) {
     return (
-        <dialog open ref={ref}>
+        <dialog ref={ref}>
             <p>You guessed {currentScore} times.</p>
             <Button
                 name="Restart"
