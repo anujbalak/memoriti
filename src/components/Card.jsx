@@ -1,4 +1,4 @@
-
+import Tilt from 'react-parallax-tilt'
 export default function Card({
     card, 
     value, 
@@ -14,7 +14,7 @@ export default function Card({
         face = 'front';
     }
     return (
-        <div className="card-container" >
+        <Tilt glareEnable={true} glareColor='#a6e244' glareMaxOpacity={0.7} gyroscope={true} glareBorderRadius='0 0 8px 8px'>
             <div className={`card ${face}`} onClick={cardClickHandler}>
                 <img src={card} alt={name} id={code}/>
                 {success && 
@@ -26,7 +26,7 @@ export default function Card({
                 }
                 
             </div>
-        </div>
+        </Tilt>
     )
 }
 

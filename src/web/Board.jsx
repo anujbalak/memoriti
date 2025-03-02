@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState, useRef, use } from "react";
+import { useEffect, useState, useRef} from "react";
 import Header from "../components/Header";
 import Instructions from "../components/instuctions";
 import Card from "../components/Card.jsx";
-import { shuffleCards } from "../logic/Shuffle.js";
+import { shuffleCards } from "../js/Shuffle.js";
 import Button from "../components/Button.jsx";
-import defaultData from "../logic/defaultData.js";
+import defaultData from "../js/defaultData.js";
 
 export default function Board() {
     const [currentScore, setCurrentScore] = useState(0)
@@ -29,7 +29,7 @@ export default function Board() {
     }, [gameFinished]);
 
     useEffect(() => {
-        if(clickedCard.length % 5 === 0) {
+        if(clickedCard.length % 7 === 0) {
             fetch(getDeck)
                 .then(response => {
                     console.log(response)
@@ -41,30 +41,30 @@ export default function Board() {
 
     if (shuffle) {
         const shuffledDeck = shuffleCards(deck.cards)
-        setDeck({
-            ...deck,
-            shuffledDeck
-        })
+        setDeck(defaultData)
+        setTimeout(() => {
+            setDeck({
+                ...deck,
+                shuffledDeck
+            })
+        }, 1000)
         setShuffle(false);
     }
 
-    if (flip) {
-        setTimeout(() => setFlip(false), 1000)
-    }
-
     function cardClickHandler(e) {
-        setFlip(true);
-        manageScore(
-            clickedCard, 
-            e.target.id,
-            currentScore, 
-            setCurrentScore,
-            bestScore,
-            setBestScore
-        );
-        checkGameStatus(setGameFinished, clickedCard, e.target.id)
-        setClickedCard([...clickedCard, e.target.id])
-        return setShuffle(true);
+        if (deck.success) {
+            manageScore(
+                clickedCard, 
+                e.target.id,
+                currentScore, 
+                setCurrentScore,
+                bestScore,
+                setBestScore
+            );
+            checkGameStatus(setGameFinished, clickedCard, e.target.id)
+            setClickedCard([...clickedCard, e.target.id])
+            return setShuffle(true);
+        }
     }
 
     function restartBtnHandler(e) {

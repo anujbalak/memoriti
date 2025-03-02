@@ -43,7 +43,7 @@
     transform: scale(1);
 }
 
-.card.front {
+.card {
     animation: flip 1s ease ;
 }
 
