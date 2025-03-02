@@ -3,6 +3,7 @@ export default class Inscryption {
     constructor() {
         this.success = true;
         this.deck_id = 'id';
+        this.back = '/inscryption/back.png'
         this.cards = [];
     }
 
@@ -27,8 +28,7 @@ export default class Inscryption {
             this.buildCard('sparrow'),
             this.buildCard('squirrel'),
             this.buildCard('stoat_talking'),
-            this.buildCard('wolf')
-
+            this.buildCard('wolf'),
         ]
     }
     
