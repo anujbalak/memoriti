@@ -3,11 +3,17 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 1.5em;
-    margin: 0.2em 1em;
+    flex: 100%;
 }
 
 .details {
-    display: grid;
+    margin: 0.2em 1em;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1em;
+}
+
+.head {
     background-color: rgb(248, 245, 242);
 }
 
@@ -21,6 +27,19 @@
 
 .score {
     font-size: 1.4rem;
+}
+
+.details .button-container {
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container {
+    margin: 1em 0 0 1em;
+}
+
+.error {
+    font-size: 1.3rem;
 }
 
 .cards {

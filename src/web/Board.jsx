@@ -6,13 +6,15 @@ import Card from "../components/Card.jsx";
 import { shuffleCards } from "../js/Shuffle.js";
 import Button from "../components/Button.jsx";
 import defaultData from "../js/defaultData.js";
+import Inscryption from "../js/inscryption.js";
+import Error from "../components/Error.jsx";
 
 export default function Board() {
     const [currentScore, setCurrentScore] = useState(0)
     const [bestScore, setBestScore] = useState(0);
     const [shuffle, setShuffle] = useState(false);
-    const [flip, setFlip] = useState(false);
-
+    const [deckType, setDeckType] = useState('cards');
+    const [error, setError] = useState(false);
     const [clickedCard, setClickedCard] = useState([]);
     const [deck, setDeck] = useState(defaultData);
     const [gameFinished, setGameFinished] = useState(false);
@@ -20,6 +22,9 @@ export default function Board() {
  
     const ref = useRef();
 
+    const inscryptionCards = new Inscryption();
+    inscryptionCards.buildDeck();
+    
     useEffect(() => {
         if (gameFinished) {
             ref.current?.showModal()
@@ -27,33 +32,68 @@ export default function Board() {
             ref.current?.close()
         }
     }, [gameFinished]);
-
+    
     useEffect(() => {
-        if(clickedCard.length % 7 === 0) {
+        if(clickedCard.length % 7 === 0 && deckType === 'cards') {
             fetch(getDeck)
-                .then(response => {
-                    console.log(response)
-                    return response.json()      
-                })
-                .then(data => setDeck(data));
-        }
-    }, [clickedCard, getDeck])
-
-    if (shuffle) {
-        const shuffledDeck = shuffleCards(deck.cards)
-        setDeck(defaultData)
-        setTimeout(() => {
-            setDeck({
-                ...deck,
-                shuffledDeck
+            .then(response => {
+                console.log(response)
+                if (!response.ok) {
+                    setError(true);
+                }
+                return response.json()      
             })
-        }, 1000)
-        setShuffle(false);
-    }
+            .then(data => setDeck(data))
+            .catch(e => setError(true))      
+        }
+    }, [deckType, clickedCard])
+        
+        useEffect(() => {
+            if (error) {
+                setDeck(null);
+                setTimeout(() => {
+                    setError(false);
+                    setDeckType('inscryption')
+                }, 2000)
+            }
+        }, [error])
 
-    function cardClickHandler(e) {
-        if (deck.success) {
-            manageScore(
+        if (shuffle) {
+            const shuffledDeck = shuffleCards(deck.cards)
+            setDeck(defaultData)
+            setTimeout(() => {
+                setDeck({
+                    ...deck,
+                    shuffledDeck
+                })
+            }, 1000)
+            setShuffle(false);
+        }
+        
+        useEffect(() => {
+            if (deckType === 'inscryption') {
+                setCurrentScore(0);
+                setBestScore(0);
+                setClickedCard([]);
+                if (clickedCard.length === 5) {
+                    prepareDeck(inscryptionCards, setDeck, 6, 15)
+                } else if (clickedCard.length === 10) {
+                    prepareDeck(inscryptionCards, setDeck, 10, 21)
+                } else {
+                    prepareDeck(inscryptionCards, setDeck, 0, 10)
+                }
+                return
+            } else {
+                setClickedCard([]);
+                setBestScore(0)
+                setCurrentScore(0);
+                setDeck(defaultData);
+            }
+        }, [deckType])
+
+        function cardClickHandler(e) {
+            if (deck.success) {
+                manageScore(
                 clickedCard, 
                 e.target.id,
                 currentScore, 
@@ -75,20 +115,42 @@ export default function Board() {
         setGameFinished(false);
     }
 
+    function cardBtnClickHandler() {
+        return setDeckType('cards')
+    }
+
+    function inscryptionBtnClickHandler() {
+        return setDeckType('inscryption')
+    }
+
     return (
         <div className="boardpage">
-            <div className="details">
-                <Header
-                    currentScore={currentScore}
-                    bestScore={bestScore}
-                />
-                <Instructions />
+            <div className="head">
+                <div className="details">
+                    <Header
+                        currentScore={currentScore}
+                        bestScore={bestScore}
+                    />
+                    <Instructions />
+                    <Button
+                        name="Cards"
+                        clickEventHandler={cardBtnClickHandler}
+                    />
+                    <Button 
+                        name='Inscryption'
+                        clickEventHandler={inscryptionBtnClickHandler}
+                    />
+                </div>
             </div>
             <hr />
+            {error && 
+                <Error />
+            }
             {deck &&
                 <Cards
                     deck={deck}
                     cardClickHandler={cardClickHandler}
+                    deckType={deckType}
                 />
             }
             {gameFinished &&
@@ -102,23 +164,46 @@ export default function Board() {
     )
 }
 
-function Cards({deck, cardClickHandler}) {
+function Cards({deck, cardClickHandler, deckType}) {
     return (
-        <div className="cards">
-            {deck.cards.map((card) => {
-                return (
-                    <Card 
-                        success={deck.success}
-                        card={card.image}
-                        value={card.value}
-                        suit={card.suit}
-                        key={card.code}
-                        code={card.code}
-                        cardClickHandler={cardClickHandler}
-                    />
-                )
-            })}
-        </div>
+        <>
+            {deckType === 'cards' &&
+                <div className="cards">
+                    {deck.cards.map((card) => {
+                        return (
+                            <Card 
+                                deckType={deckType}
+                                success={deck.success}
+                                card={card.image}
+                                value={card.value}
+                                suit={card.suit}
+                                key={card.code}
+                                code={card.code}
+                                cardClickHandler={cardClickHandler}
+                            />
+                        )
+                    })}
+                </div>
+            
+            }
+            {deckType === 'inscryption' &&
+                <div className="cards">
+                    {deck.cards.map((card) => {
+                        return (
+                            <Card 
+                                deckType={deckType}
+                                card={card.image}
+                                value={card.alt}
+                                key={card.code}
+                                suit={''}
+                                cardClickHandler={cardClickHandler}
+                            />
+                        )
+                    })}
+                </div>
+            }
+        
+        </>
     )
 }
 
@@ -157,4 +242,12 @@ function checkGameStatus(setGameFinished, clickedCards, value) {
         setGameFinished(true);
     }
     return
+}
+
+function prepareDeck(deck, setDeck, startIndex, endIndex) {
+    let deckCopy = {};
+    let cards = deck.cards.slice(startIndex, endIndex)
+    cards = shuffleCards(cards)
+    deckCopy = {...deck, cards}
+    return setDeck(deckCopy)
 }

@@ -30,6 +30,7 @@ export default class Inscryption {
             this.buildCard('stoat_talking'),
             this.buildCard('wolf'),
         ]
+        return this.cards;
     }
     
     buildCard(name) {
@@ -40,7 +41,8 @@ export default class Inscryption {
 
 class Card {
     constructor(name) {
-        this.src = `/inscryption/${name}.png`;
+        this.image = `/inscryption/${name}.png`;
         this.alt = name;
+        this.code = name;
     }
 }
