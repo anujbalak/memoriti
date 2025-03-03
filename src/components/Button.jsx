@@ -1,15 +1,9 @@
-export default function Button({name, clickEventHandler, className}) {
+export default function Button({name, clickEventHandler}) {
     return (
         <div className="button-container">
-            {className ? 
-                <button onClick={clickEventHandler} className={`button ${name}-btn ${className}`}>
-                    {name}
-                </button>
-            :
-                <button onClick={clickEventHandler} className={`button ${name}-btn`}>
-                    {name}
-                </button>
-            }
+            <button onClick={clickEventHandler} className={`button ${name}-btn`}>
+                {name}
+            </button>
         </div>
     )
 }
