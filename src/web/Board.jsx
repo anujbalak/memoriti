@@ -25,6 +25,9 @@ export default function Board() {
     const inscryptionCards = new Inscryption();
     inscryptionCards.buildDeck();
     
+    let defaultInscryptionData = structuredClone(defaultData)
+    defaultInscryptionData = insertInscryptionImage(defaultInscryptionData);
+    
     useEffect(() => {
         if (gameFinished) {
             ref.current?.showModal()
@@ -56,8 +59,11 @@ export default function Board() {
 
         if (shuffle) {
             const shuffledDeck = shuffleCards(deck.cards)
-            insertInscryptionImage(defaultData)
-            setDeck(defaultData)
+            if (deckType === 'inscryption') {
+                setDeck(defaultInscryptionData)
+            } else {
+                setDeck(defaultData)
+            }
             setTimeout(() => {
                 setDeck({
                     ...deck,
@@ -66,6 +72,7 @@ export default function Board() {
             }, 1000)
             setShuffle(false);
         }
+      
         
         useEffect(() => {
             if (deckType === 'inscryption') {
@@ -113,11 +120,15 @@ export default function Board() {
     }
 
     function cardBtnClickHandler() {
-        return setDeckType('cards')
+        if (!shuffle) {
+            return setDeckType('cards')
+        }
     }
 
     function inscryptionBtnClickHandler() {
-        return setDeckType('inscryption')
+        if (!shuffle) {
+            return setDeckType('inscryption')
+        }
     }
 
     return (
@@ -254,7 +265,8 @@ function prepareDeck(deck, setDeck, startIndex, endIndex) {
 }
 
 function insertInscryptionImage(deck) {
-    deck.cards.forEach((card) => {
-        card.image = '/inscryption/back.png'
+    deck.cards.map((card) => {
+        return card.image = '/inscryption/back.png'
     })
+    return deck
 }
