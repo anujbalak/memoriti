@@ -168,6 +168,7 @@ export default function Board() {
                     ref={ref}
                     currentScore={currentScore}
                     restartBtnHandler={restartBtnHandler}
+                    className={deckType}
                 />
             }
         </div>
@@ -237,13 +238,14 @@ function manageScore(
     return currentScore
 }
 
-function EndScreen({ref, currentScore, restartBtnHandler}) {
+function EndScreen({ref, currentScore, restartBtnHandler, className}) {
     return (
-        <dialog ref={ref}>
+        <dialog ref={ref} className={className}>
             <p>You guessed {currentScore} times.</p>
             <Button
                 name="Restart"
                 clickEventHandler={restartBtnHandler}
+                className={className}
             />
         </dialog>
     )

@@ -1,5 +1,5 @@
-.inscryption_page {
-    background-color: rgb(255, 223, 192);
+.boardpage.inscryption_page {
+    background-color: rgb(241, 211, 180);
     min-height: 100vh;
 }
 
@@ -90,6 +90,10 @@ dialog {
     border: 2px solid black;
     border-radius: 4px;
     gap: 1em;
+}
+
+dialog.inscryption {
+    background-color: rgb(255, 223, 192);
 }
 
 ::backdrop {
