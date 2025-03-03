@@ -4,10 +4,10 @@
     cursor: pointer;
     display: grid;
     grid-template-rows: auto;
-    /* border-radius: 12px;
-    box-shadow: 5px 5px black; */
-    /* transform: translate(-5%, -5%);
-    transition: transform ease-out 0.2s, box-shadow ease-out 0.2s; */
+}
+
+.cards>div {
+    padding: 0;
 }
 
 /* .card:hover, .card:focus {

@@ -37,10 +37,6 @@ export default function Board() {
         if(clickedCard.length % 7 === 0 && deckType === 'cards') {
             fetch(getDeck)
             .then(response => {
-                console.log(response)
-                if (!response.ok) {
-                    setError(true);
-                }
                 return response.json()      
             })
             .then(data => setDeck(data))
@@ -124,8 +120,8 @@ export default function Board() {
     }
 
     return (
-        <div className="boardpage">
-            <div className="head">
+        <div className={`boardpage ${deckType}_page`}>
+            <div className={`head ${deckType}_head`}>
                 <div className="details">
                     <Header
                         currentScore={currentScore}
@@ -135,10 +131,12 @@ export default function Board() {
                     <Button
                         name="Cards"
                         clickEventHandler={cardBtnClickHandler}
+                        className={deckType}
                     />
                     <Button 
                         name='Inscryption'
                         clickEventHandler={inscryptionBtnClickHandler}
+                        className={deckType}
                     />
                 </div>
             </div>
@@ -180,6 +178,7 @@ function Cards({deck, cardClickHandler, deckType}) {
                                 key={card.code}
                                 code={card.code}
                                 cardClickHandler={cardClickHandler}
+                                glareColor={'#a6e244'}
                             />
                         )
                     })}
@@ -197,6 +196,7 @@ function Cards({deck, cardClickHandler, deckType}) {
                                 key={card.code}
                                 suit={''}
                                 cardClickHandler={cardClickHandler}
+                                glareColor={'#9e6670'}
                             />
                         )
                     })}
