@@ -21,7 +21,7 @@ export default function Card({
     return (
         <Tilt glareEnable={true} glareColor={glareColor} glareMaxOpacity={0.7} gyroscope={true} glareBorderRadius='0 0 8px 8px'>
             {deckType === 'cards' && 
-                <div className={`card ${face} ${deckType}`} onClick={cardClickHandler}>
+                <div className={`card ${face} deck-${deckType}`} onClick={cardClickHandler}>
                     <img src={card} alt={name} id={code}/>
                     {success && 
                         <span className="card-name-container">
