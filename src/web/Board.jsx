@@ -56,6 +56,7 @@ export default function Board() {
 
         if (shuffle) {
             const shuffledDeck = shuffleCards(deck.cards)
+            insertInscryptionImage(defaultData)
             setDeck(defaultData)
             setTimeout(() => {
                 setDeck({
@@ -250,4 +251,10 @@ function prepareDeck(deck, setDeck, startIndex, endIndex) {
     cards = shuffleCards(cards)
     deckCopy = {...deck, cards}
     return setDeck(deckCopy)
+}
+
+function insertInscryptionImage(deck) {
+    deck.cards.forEach((card) => {
+        card.image = '/inscryption/back.png'
+    })
 }
