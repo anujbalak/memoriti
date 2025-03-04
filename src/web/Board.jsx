@@ -8,6 +8,7 @@ import Button from "../components/Button.jsx";
 import defaultData from "../js/defaultData.js";
 import Inscryption from "../js/inscryption.js";
 import Error from "../components/Error.jsx";
+import Credits from "../components/Credits.jsx";
 
 export default function Board() {
     const [currentScore, setCurrentScore] = useState(0)
@@ -18,6 +19,7 @@ export default function Board() {
     const [clickedCard, setClickedCard] = useState([]);
     const [deck, setDeck] = useState(defaultData);
     const [gameFinished, setGameFinished] = useState(false);
+    const [credit, setCredit] = useState(false);
     const getDeck = `https://deckofcardsapi.com/api/deck/new/draw/?count=10`;
  
     const ref = useRef();
@@ -132,6 +134,14 @@ export default function Board() {
         }
     }
 
+    function creditCloseBtnHandler() {
+        return setCredit(false)
+    }
+
+    function creditOpenBtnHandler() {
+        return setCredit(true)
+    }
+
     return (
         <div className={`boardpage ${deckType}_page`}>
             <div className={`head ${deckType}_head`}>
@@ -139,6 +149,9 @@ export default function Board() {
                     <Header
                         currentScore={currentScore}
                         bestScore={bestScore}
+                        credit={credit}
+                        creditOpenBtnHandler={creditOpenBtnHandler}
+                        className={deckType}
                     />
                     <Instructions />
                     <Button
@@ -170,6 +183,13 @@ export default function Board() {
                     currentScore={currentScore}
                     restartBtnHandler={restartBtnHandler}
                     className={deckType}
+                />
+            }
+            {credit &&
+                <Credits
+                    creditCloseBtnHandler={creditCloseBtnHandler}
+                    className={deckType}
+                    credit={credit}
                 />
             }
         </div>

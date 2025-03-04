@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
+import Button from "./Button";
 import Title from "./title";
 
-export default function Header({currentScore, bestScore}) {
+export default function Header({currentScore, bestScore, creditOpenBtnHandler, className, credit}) {
     return (
         <header className="header-container">
             <Title
@@ -15,6 +16,13 @@ export default function Header({currentScore, bestScore}) {
                 name="best"
                 score={bestScore}
             />
+            {!credit &&
+                <Button
+                    name="➡"
+                    className={`credit-btn open ${className}`}
+                    clickEventHandler={creditOpenBtnHandler}
+                />
+            }
         </header>
     )
 }

@@ -1,0 +1,84 @@
+.credits {
+    background-color: #b2afab;
+    min-height: 100vh;
+    position: absolute;
+    width: 50%;
+    max-width: 1000px;
+    right: 0;
+    top: 0;
+    border-left: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    animation: swipe 0.5s ease-in;
+    will-change: transform;
+}
+
+.credits.false {
+    animation: swipe 0.5s ease-out reverse;
+    will-change: transform;
+}
+
+@keyframes swipe {
+    0% {
+        transform: translate(100%, 0);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+
+.credits.inscryption {
+    background-color: #bea68d;
+}
+
+.credits .button-container {
+    margin-top: 1em;
+    position: absolute;
+    transform: translate(-150%, 0);
+}
+
+.credits .button-container,.header-container>div.button-container  {
+}
+
+.credits-btn, .header-container .credit-btn {
+    padding: 0.1em 0.2em;
+}
+
+.helpers {
+    margin-left: 1em;
+    font-size: 1.5rem;
+}
+
+.credit-note {
+    font-style: italic;
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin-left: 1em;
+}
+
+.inscryption-link, .deckofcards-link, .github-link {
+    margin-left: 1em;
+    max-width: 400px;
+    font-size: 1.3rem;
+}
+
+.inscryption-link.cards-c a, .deckofcards-link.cards-c a, .github-link.cards-c a {
+    color: #3a5e00;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.credits div a:hover, .credits div a:focus {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: currentColor;
+} 
+
+.inscryption-link.inscryption a, .deckofcards-link.inscryption a, .github-link.inscryption a {
+    color: #544048;
+    font-weight: 700;
+    text-decoration: none;
+}
