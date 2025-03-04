@@ -96,7 +96,7 @@ export default function Board() {
                 setCurrentScore(0);
                 setDeck(defaultData);
             }
-        }, [deckType, gameFinished])
+        }, [deckType])
 
         function cardClickHandler(e) {
             if (deck.success) {
@@ -261,7 +261,7 @@ function manageScore(
 
 function EndScreen({ref, currentScore, restartBtnHandler, className}) {
     return (
-        <dialog ref={ref} className={className}>
+        <dialog ref={ref} className={`${className}-dialog`}>
             <p>You guessed {currentScore} times.</p>
             <Button
                 name="Restart"
