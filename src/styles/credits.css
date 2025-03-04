@@ -1,11 +1,19 @@
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+}
+
 .credits {
     background-color: #b2afab;
-    min-height: 100vh;
+    min-height: 100%;
     position: absolute;
     width: 50%;
     max-width: 1000px;
     right: 0;
     top: 0;
+    border-bottom: 2px solid black;
     border-left: 2px solid black;
     display: flex;
     flex-direction: column;
