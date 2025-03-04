@@ -65,6 +65,13 @@ export default function Board() {
                 setDeck(defaultData)
             }
             setTimeout(() => {
+                if (deckType === 'inscryption') {
+                    if (clickedCard.length === 5) {
+                        return setDeck(prepareDeck(inscryptionCards, 6, 16));
+                    } else if (clickedCard.length === 10) {
+                        return setDeck(prepareDeck(inscryptionCards, 11, 21))
+                    }
+                }
                 setDeck({
                     ...deck,
                     shuffledDeck
@@ -79,21 +86,15 @@ export default function Board() {
                 setCurrentScore(0);
                 setBestScore(0);
                 setClickedCard([]);
-                if (clickedCard.length === 5) {
-                    prepareDeck(inscryptionCards, setDeck, 6, 15)
-                } else if (clickedCard.length === 10) {
-                    prepareDeck(inscryptionCards, setDeck, 10, 21)
-                } else {
-                    prepareDeck(inscryptionCards, setDeck, 0, 10)
-                }
-                return
+                let newDeck = prepareDeck(inscryptionCards, 0, 10)
+                setDeck(newDeck);
             } else {
                 setClickedCard([]);
                 setBestScore(0)
                 setCurrentScore(0);
                 setDeck(defaultData);
             }
-        }, [deckType])
+        }, [deckType, gameFinished])
 
         function cardClickHandler(e) {
             if (deck.success) {
@@ -258,12 +259,12 @@ function checkGameStatus(setGameFinished, clickedCards, value) {
     return
 }
 
-function prepareDeck(deck, setDeck, startIndex, endIndex) {
+function prepareDeck(deck, startIndex, endIndex) {
     let deckCopy = {};
     let cards = deck.cards.slice(startIndex, endIndex)
     cards = shuffleCards(cards)
     deckCopy = {...deck, cards}
-    return setDeck(deckCopy)
+    return deckCopy
 }
 
 function insertInscryptionImage(deck) {
